@@ -60,7 +60,11 @@
             container: 'map', // container ID
             style: 'mapbox://styles/mapbox/light-v10',
             zoom: 7, // starting zoom
-            center: [-118.2437, 33.7] // starting center
+            center: [-118.2437, 33.7], // starting center
+            projection: {
+                name: 'albers',
+                parallels: [25, 50]
+            }
         });
 
         //load data to the map as new layers.
