@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Wildfire Map</title>
-    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="viewport" content='width=device-width, initial-scale=1'>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
@@ -47,51 +47,142 @@
         a {
             color: black
         }
+
+        .session {
+            margin-bottom: 20px;
+        }
+
+        .row {
+            height: 12px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 20px;
+            line-height: 30px;
+        }
+ 
+        h2 {
+            font-size: 14px;
+            line-height: 20px;
+            margin-bottom: 10px;
+        }
+
+        .label {
+        width: 15%;
+        display: inline-block;
+        text-align: center;
+        }
+
+        #console {
+            position: absolute;
+            width: 240px;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: white;
+        }
+
+        .map-overlay {
+        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        position: absolute;
+        width: 25%;
+        top: 0;
+        left: 0;
+        padding: 10px;
+        }
+
+        .map-overlay .map-overlay-inner {
+            background-color: #fff;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            border-radius: 3px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .map-overlay h2 {
+            line-height: 24px;
+            display: block;
+            margin: 0 0 10px;
+        }
+
+        .map-overlay .legend .bar {
+            height: 10px;
+            width: 100%;
+            background: linear-gradient(to right, #fca107, #7f3121);
+        }
+
+        .map-overlay input {
+            background-color: transparent;
+            display: inline-block;
+            width: 100%;
+            position: relative;
+            margin: 0;
+            cursor: ew-resize;
+        }
+
     </style>
 </head>
 
 <body>
     <div id="map"></div>
     <div id="legend"></div>
+    <div class="map-overlay top">
+        <div class="map-overlay-inner">
+            <h2>Wildfires 2017-2020</h2>
+            <label id="year"></label>
+            <input id="slider" type="range" min="0" max="3" step="1" value="2017">
+        </div>
+    </div>
     <script>
         mapboxgl.accessToken =
             'pk.eyJ1IjoiamFrb2J6aGFvIiwiYSI6ImNpcms2YWsyMzAwMmtmbG5icTFxZ3ZkdncifQ.P9MBej1xacybKcDN_jehvw';
         let map = new mapboxgl.Map({
             container: 'map', // container ID
             style: 'mapbox://styles/mapbox/light-v10',
-            zoom: 7, // starting zoom
+            zoom: 6, // starting zoom
             center: [-118.2437, 33.7], // starting center
             projection: {
-                name: 'albers',
-                parallels: [25, 50]
-            }
+                    name: 'albers',
+                    parallels: [25, 50]
+                } // starting projection
+
         });
 
         //load data to the map as new layers.
         //map.on('load', function loadingData() {
         map.on('load', () => { //simplifying the function statement: arrow with brackets to define a function
-
             // when loading a geojson, there are two steps
             // add a source of the data and then add the layer out of the source
-            map.addSource('fires2019', {
-                'type': 'geojson',
-                'data': 'assets/fire_perimeter_2019.geojson'
+            map.addSource('fires2017', {
+                type: 'geojson',
+                data: 'assets/fire_perimeters_2017on.geojson',
+                
             });
 
             map.addLayer({
-                    'id': 'fires2019_layer',
+                    'id': 'fires2017_layer',
                     'type': 'fill',
-                    'source': 'fires2019',
+                    'source': 'fires2017',
                     'paint': {
                         'fill-color': 'rgba(209, 18, 18, 0.4)',
                         'fill-outline-color': 'rgba(200, 100, 240, 1)'
-                    }
+                    },
+                    filter: ['==', ['number', ['get', 'Year_num']], 2020]
                 },
             );
 
+            // update year filter when the slider is dragged
+            document.getElementById('slider').addEventListener('input', (event) => {
+                const year = parseInt(event.target.value);
+                // update the map
+                map.setFilter('fires2017_layer', ['==', ['number', ['get', 'Year_num']], year]);
+                // update text in the UI
+                document.getElementById('active-year').innerText = year;
+            });
+
 
             // click on tree to view cause of fire in a popup
-            map.on('click', 'fires2019_layer', (event) => {
+            map.on('click', 'fires2017layer', (event) => {
                 new mapboxgl.Popup()
                     .setLngLat(event.features[0].geometry.coordinates)
                     .setHTML(`<strong>Year:</strong> ${event.features[0].properties.cause}`)
