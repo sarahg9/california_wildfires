@@ -8,7 +8,7 @@ One or two screenshots to illustrate the project's functions.
 # Project Goal
 
 # Data Sources
-
+[The California Department of Forestry and Fire Protection](https://frap.fire.ca.gov/mapping/gis-data/)
 # Applied Libraries
 (e.g., Mapbox, D3, C3) and Web Services in use (e.g., github, basemap).
 
@@ -26,3 +26,9 @@ Geography Data Science Major
 Geography Data Science Major
 
 # Acknowledgment
+## Bo Zhao
+Professor<br/>
+zhaobo@uw.edu
+## Jiaxin Feng
+TA<br/> 
+jxfang@uw.edu
