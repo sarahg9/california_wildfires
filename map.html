@@ -61,7 +61,7 @@
             font-size: 20px;
             line-height: 30px;
         }
- 
+
         h2 {
             font-size: 14px;
             line-height: 20px;
@@ -88,14 +88,14 @@
         width: 25%;
         top: 0;
         left: 0;
-        padding: 10px;
+        padding: 15px;
         }
 
         .map-overlay .map-overlay-inner {
             background-color: #fff;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
             border-radius: 3px;
-            padding: 10px;
+            padding: 15px;
             margin-bottom: 10px;
         }
 
@@ -118,6 +118,14 @@
             position: relative;
             margin: 0;
             cursor: ew-resize;
+        }
+
+        .mapboxgl-popup-content{
+            background-color: #444;
+            color: #fff0d4;
+            padding: 20px;
+            border-radius: 7px;
+            border-width: 4px;
         }
 
     </style>
@@ -157,7 +165,7 @@
             map.addSource('fires2017', {
                 type: 'geojson',
                 data: 'assets/fire_perimeters_2017on.geojson',
-                
+
             });
 
             map.addLayer({
@@ -169,8 +177,7 @@
                         'fill-outline-color': 'rgba(200, 100, 240, 1)'
                     },
                     filter: ['==', ['number', ['get', 'Year_num']], 2020]
-                },
-            );
+                });
 
             // update year filter when the slider is dragged
             document.getElementById('slider').addEventListener('input', (event) => {
@@ -183,14 +190,26 @@
 
 
             // click on tree to view cause of fire in a popup
-            map.on('click', 'fires2017layer', (event) => {
-                new mapboxgl.Popup()
-                    .setLngLat(event.features[0].geometry.coordinates)
-                    .setHTML(`<strong>Year:</strong> ${event.features[0].properties.cause}`)
+            map.on('click', 'fires2017_layer', (event) => {
+                // console.log(event.features[0].geometry.coordinates[0][0]);
+                let arr = event.features[0].geometry.coordinates;
+                while(arr[0][0]){
+                    arr = arr[0]
+                }
+
+                console.log(arr);
+                new mapboxgl.Popup({closeButton:false})
+                    .setLngLat(arr)
+                    .setHTML(`<strong>Name: </strong> ${event.features[0].properties.FIRE_NAME} Fire<br /><strong>Acreage:</strong> ${event.features[0].properties.GIS_ACRES}` )
                     .addTo(map);
             });
 
+
+
         });
+
+
+
 
 
         // create legend
