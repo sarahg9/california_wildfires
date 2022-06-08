@@ -8,7 +8,7 @@ One or two screenshots to illustrate the project's functions.
 # Project Goal
 
 # Data Sources
-[The California Department of Forestry and Fire Protection](https://frap.fire.ca.gov/mapping/gis-data/)
+The data visualized on this map was derived from [The California Department of Forestry and Fire Protection](https://frap.fire.ca.gov/mapping/gis-data/). Their mission emphasizes the management and protection fo California's natural resources. They accomplish this goal through ongoing assessment and study of the State's natural resources and extensive Resource Management Program. They provide an archive of GIS data for mapping purposes because they know how crucial maps are to protecting and preventing disaster.
 # Applied Libraries
 (e.g., Mapbox, D3, C3) and Web Services in use (e.g., github, basemap).
 
