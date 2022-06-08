@@ -10,7 +10,7 @@ The goal of our project is to provide a more localized perspective of climate ch
 # Data Sources
 The data visualized on this map was derived from [The California Department of Forestry and Fire Protection](https://frap.fire.ca.gov/mapping/gis-data/). Their mission emphasizes the management and protection fo California's natural resources. They accomplish this goal through ongoing assessment and study of the State's natural resources and extensive Resource Management Program. They provide an archive of GIS data for mapping purposes because they know how crucial maps are to protecting and preventing disaster.
 # Applied Libraries
-(e.g., Mapbox, D3, C3) and Web Services in use (e.g., github, basemap).
+To create this map we are heavily utilizing MapBox. Our basemap was imported by API access key from MapBox's webmap services. We chose to use their ["https://www.mapbox.com/maps/light"](Light V-10) basemap for enhanced visibility of the fire perimeters using an Albers Projection. Our group also utilized GitHub to not only collaborate, but to create a webpage using Github Pages.
 
 # About Us
 We are Geography 458 students from the University of Washington! Our goal for this project is to map wildfires in California. It is crucial to map wildfires because they are a valuable tool in depicting the consequences of climate change as well as assessing risk for residents. A few of us are from California and have a particular awareness of the drastic effects of these wildfires. Our passion for this topic has since grown, and we hope to bring awareness and visual aid of wildfires to those in need.
