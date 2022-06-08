@@ -4,9 +4,9 @@ https://github.com/sarahg9/california_wildfires
 One or two screenshots to illustrate the project's functions.
 
 # Project Description
-
+Our map gives a visualization of changes over time and suggests a trend of increasing fires over recent decades. 
 # Project Goal
-
+The goal of our project is to provide a more localized perspective of climate change impacts while also bringing attention to a region heavily impacted by wildfires
 # Data Sources
 The data visualized on this map was derived from [The California Department of Forestry and Fire Protection](https://frap.fire.ca.gov/mapping/gis-data/). Their mission emphasizes the management and protection fo California's natural resources. They accomplish this goal through ongoing assessment and study of the State's natural resources and extensive Resource Management Program. They provide an archive of GIS data for mapping purposes because they know how crucial maps are to protecting and preventing disaster.
 # Applied Libraries
