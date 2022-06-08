@@ -18,6 +18,7 @@ The data visualized on this map was derived from [The California Department of F
 - For the icons, we used Google Icons from [W3 Schools' icon search function](https://www.w3schools.com/icons/icons_reference.asp).
 - The images on the site are from [Unplash](https://unsplash.com/) or similar websites that allow free use of photos.
 - We utilized code from our [course's Lab 3 ](https://github.com/jakobzhao/geog458/tree/master/labs/lab03) for an initial framework for adding the map to the page.
+- For the webpage design, we used editted a template from [Bootstrap] (https://startbootstrap.com/themes).
 
 # About Us
 We are Geography 458 students from the University of Washington! Our goal for this project is to map wildfires in California. It is crucial to map wildfires because they are a valuable tool in depicting the consequences of climate change as well as assessing risk for residents. A few of us are from California and have a particular awareness of the drastic effects of these wildfires. Our passion for this topic has since grown, and we hope to bring awareness and visual aid of wildfires to those in need.
