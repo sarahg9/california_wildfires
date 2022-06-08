@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Wildfire Map</title>
+    <meta name="viewport" content='width=device-width, initial-scale=1'>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .session {
+            margin-bottom: 20px;
+        }
+
+        .row {
+            height: 12px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 20px;
+            line-height: 30px;
+        }
+
+        h2 {
+            font-size: 14px;
+            line-height: 20px;
+            margin-bottom: 10px;
+        }
+        
+
+        .label {
+        width: 15%;
+        display: inline-block;
+        text-align: center;
+        }
+
+        #console {
+            position: absolute;
+            width: 240px;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: white;
+        }
+
+        .map-overlay {
+            font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+            position: absolute;
+            width: 25%;
+            top: 0;
+            left: 0;
+            padding: 15px;
+        }
+
+        .map-overlay .map-overlay-inner {
+            background-color: rgba(252, 251, 250, 0.801);
+            border-radius: 10px;
+            border-color:rgba(185, 121, 61, 0.836);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin-bottom: 10px;
+        }
+
+        .map-overlay h2 {
+            line-height: 24px;
+            display: block;
+            margin: 0 0 10px;
+        }
+
+        .map-overlay h1 {
+            line-height: 24px;
+            display: block;
+            margin: 0 0 10px;
+        }
+
+        .map-overlay input {
+            background-color: transparent;
+            display: inline-block;
+            width: 100%;
+            position: relative;
+            margin: 0;
+            cursor: ew-resize;
+        }
+
+        .mapboxgl-popup-content{
+            background-color: #444;
+            color: #fff0d4;
+            padding: 20px;
+            border-radius: 7px;
+            border-width: 4px;
+        }
+
+        .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip{
+            border-top-color: #444;
+        }
+
+        .dot {
+            height: 15px;
+            width: 20px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .dotmargin {
+            height: 15px;
+            width: 20px;
+            margin-left: 30px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        
+
+
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div id="legend"></div>
+    <div class="map-overlay top">
+        <div class="map-overlay-inner">
+<<<<<<< HEAD
+            <h1 style ="text-align: center;">California Wildfires <br>1980s-2020s</h1>
+            <h2>Hover over a fire to see more information.</h2>
+            <span class="dot" style="background-color: rgb(171, 81, 223)"></span>
+            <h3 style="display: inline-block" >1970s</h3>
+            <span class="dotmargin" style="background-color: rgb(197, 39, 150)"></span>
+            <h3 style="display: inline-block">1980s</h3>
+            <span class="dotmargin" style="background-color: rgb(214, 24, 24)" ></span>
+            <h3 style="display: inline-block">1990s</h3><br>
+            <span class="dot" style="background-color: rgb(180, 119, 62)"></span>
+            <h3 style="display: inline-block">2000s</h3>
+            <span class="dotmargin" style="background-color: rgb(202, 179, 48)"></span>
+            <h3 style="display: inline-block">2010s</h3>
+            <label id="year"></label>
+            <h2>Displayed Decade: <label id='active-year'>2000</label>s</h2>
+            <input id="slider" type="range" min="1970" max="2010" step="10" value="2000" list="tickmarks">
+            <datalist id="tickmarks">
+                <option>1970</option>
+                <option>1980</option>
+                <option>1990</option>
+                <option>2000</option>
+                <option>2010</option>
+            </datalist>
+            
+            <a href="https://sarahg9.github.io/california_wildfires/index"><i class="material-icons" style="color:black;" >home</i></a>
+            <p style="font-size:16px;display:inline-block;"><br><a href="https://sarahg9.github.io/california_wildfires/index">Homepage</a></p>
+            <a href="https://sarahg9.github.io/california_wildfires/about"><i class="material-icons" style="color:black;margin-left:20px">insert_chart</i></a>
+            <p style="font-size:16px;display:inline-block;"><br><a href="https://sarahg9.github.io/california_wildfires/about">About Data</a></p>
+            
+=======
+            <h1>California Wildfires <br />(1980's - 2010's)</h1>
+            <label id="year"></label>
+            <h2>Decade: <label id='active-decade'>2000's</label></h2>
+            <input id="slider" type="range" min="1980" max="2010" step="10" value="2000">
+>>>>>>> 086bd89a0db8b3eab4a0883abee2b63e8201f564
+        </div>
+    </div>
+    <script>
+        mapboxgl.accessToken =
+            'pk.eyJ1IjoiamFrb2J6aGFvIiwiYSI6ImNpcms2YWsyMzAwMmtmbG5icTFxZ3ZkdncifQ.P9MBej1xacybKcDN_jehvw';
+        let map = new mapboxgl.Map({
+            container: 'map', // container ID
+            style: 'mapbox://styles/sarahg7/cl45boclv000i14k7qckvrubp',
+            //style: 'mapbox://styles/mapbox/light-v10',
+            zoom: 5, // starting zoom
+            minZoom: 4,
+            maxZoom: 18,
+            center: [-120.557596, 37.611266], // starting center
+            projection: {
+                    name: 'albers',
+                    parallels: [25, 50]
+                } // starting projection
+
+        });
+
+        map.addControl(new mapboxgl.NavigationControl());
+
+        //load data to the map as new layers.
+        //map.on('load', function loadingData() {
+        map.on('load', () => { 
+            map.addSource('fires2017', {
+                type: 'geojson',
+                data: 'assets/fire_perimeters_2017on.geojson',
+
+            });
+
+            map.addSource('fires2000s-source', {
+                type: 'geojson',
+                data: 'assets/fireperimeters_2000s.geojson',
+
+            });
+
+            map.addSource('fires2010s-source', {
+                type: 'geojson',
+                data: 'assets/fireperimeters_2010s.geojson',
+
+            });
+
+            map.addSource('fires1990s-source', {
+                type: 'geojson',
+                data: 'assets/fireperimeters_1990s.geojson',
+
+            });
+
+            map.addSource('fires1980s-source', {
+                type: 'geojson',
+                data: 'assets/fireperimeters_1980s.geojson',
+
+            });
+
+            map.addSource('fires1970s-source', {
+                type: 'geojson',
+                data: 'assets/fireperimeters_1970s.geojson',
+
+            });
+
+            
+
+
+            //
+            // map.addLayer({
+            //         'id': 'fires2017_layer',
+            //         'type': 'fill',
+            //         'source': 'fires2017',
+            //         'paint': {
+            //             'fill-color': 'rgba(209, 18, 18, 0.4)',
+            //             'fill-outline-color': 'rgba(200, 100, 240, 1)'
+            //         },
+            //         filter: ['==', ['number', ['get', 'Year_num']], 2020]
+            //     });
+
+
+            map.addLayer({
+                    'id': 'fires2000s',
+                    'type': 'fill',
+                    'source': 'fires2000s-source',
+                    'paint': {
+                        'fill-color': 'rgba(209, 18, 18, 0.4)',
+                        'fill-outline-color': 'rgba(200, 100, 240, 1)'
+                    }
+                });
+
+            map.addLayer({
+                    'id': 'fires2010s',
+                    'type': 'fill',
+                    'source': 'fires2010s-source',
+                    'paint': {
+                        'fill-color': 'rgba(209, 18, 18, 0.4)',
+                        'fill-outline-color': 'rgba(200, 100, 240, 1)'
+                    }
+                });
+            map.setLayoutProperty('fires2010s', 'visibility', 'none');
+
+            map.addLayer({
+                    'id': 'fires1990s',
+                    'type': 'fill',
+                    'source': 'fires1990s-source',
+                    'paint': {
+                        'fill-color': 'rgba(209, 18, 18, 0.4)',
+                        'fill-outline-color': 'rgba(200, 100, 240, 1)'
+                    }
+                });
+            map.setLayoutProperty('fires1990s', 'visibility', 'none');
+
+            map.addLayer({
+                    'id': 'fires1980s',
+                    'type': 'fill',
+                    'source': 'fires1980s-source',
+                    'paint': {
+                        'fill-color': 'rgba(209, 18, 18, 0.4)',
+                        'fill-outline-color': 'rgba(200, 100, 240, 1)'
+                    }
+                });
+            map.setLayoutProperty('fires1980s', 'visibility', 'none');
+
+            map.addLayer({
+                    'id': 'fires1970s',
+                    'type': 'fill',
+                    'source': 'fires1970s-source',
+                    'paint': {
+                        'fill-color': 'rgba(209, 18, 18, 0.4)',
+                        'fill-outline-color': 'rgba(200, 100, 240, 1)'
+                    }
+                });
+            map.setLayoutProperty('fires1970s', 'visibility', 'none');
+
+
+            let currentLayer = 'fires2000s';
+            // update year filter when the slider is dragged
+            document.getElementById('slider').addEventListener('input', (event) => {
+                console.log('Current Layer: ' + currentLayer);
+                const selected = parseInt(event.target.value);
+                const layerDict = {
+                    2000 : "fires2000s",
+                    2010 : "fires2010s",
+                    1990 : "fires1990s",
+                    1980 : "fires1980s",
+                    1970 : "fires1970s"
+                };
+                const selectedLayer = layerDict[selected];
+                const visibility = map.getLayoutProperty(
+                        selectedLayer,
+                        'visibility'
+                    );
+
+                    // Toggle layer visibility by changing the layout object's visibility property.
+                    console.log('making ' + selectedLayer + ' visible');
+                    map.setLayoutProperty(selectedLayer, 'visibility', 'visible');
+                    this.className = '';
+                    this.className = 'active';
+                    console.log('making ' + currentLayer + ' invisible');
+                    map.setLayoutProperty(currentLayer, 'visibility', 'none');
+                    currentLayer = selectedLayer;
+                // update text in the UI
+                document.getElementById('active-decade').innerText = selected + "'s";
+            });
+
+            var popup = new mapboxgl.Popup({closeButton:false});
+
+            map.on('mousemove', currentLayer, (event) => {
+                // console.log(event.features[0].geometry.coordinates[0][0]);
+                let arr = event.features[0].geometry.coordinates;
+                while(arr[0][0]){
+                    arr = arr[0]
+                }
+
+                // object containing a dictionary of causes of forest fires
+                const causeDict = {
+                    1 : "Lightning",
+                    2 : "Equipment Use",
+                    3 : "Smoking",
+                    4 : "Campfire",
+                    5 : "Debris",
+                    6 : "Railroad",
+                    7 : "Arson",
+                    8 : "Playing with fire",
+                    9 : "Miscellaneous",
+                    10 : "Vehicle",
+                    11 : "Powerline",
+                    12 : "Firefighter Training",
+                    13 : "Non-Firefighter Training",
+                    14 : "Unknown/Unidentified",
+                    15 : "Structure",
+                    16 : "Aircraft",
+                    17 : "NA",
+                    18 : "Escaped Prescribed Burn",
+                    19 : "Campfire",
+                };
+
+                popup
+                    .setLngLat(arr)
+                    .setHTML(`<strong>${event.features[0].properties.FIRE_NAME} FIRE</strong><br /><strong>Year:</strong> ${parseInt(event.features[0].properties.YEAR_)}<br /><strong>Acreage:</strong> ${parseInt(event.features[0].properties.GIS_ACRES)}<br /><strong>Cause: </strong>${causeDict[event.features[0].properties.CAUSE]}` )
+                    .addTo(map);
+            });
+
+            // click to view cause of fire in a popup
+            map.on('mousemove', 'fires2010s', (event) => {
+                // console.log(event.features[0].geometry.coordinates[0][0]);
+                let arr = event.features[0].geometry.coordinates;
+                while(arr[0][0]){
+                    arr = arr[0]
+                }
+
+                // object containing a dictionary of causes of forest fires
+                const causeDict = {
+                    1 : "Lightning",
+                    2 : "Equipment Use",
+                    3 : "Smoking",
+                    4 : "Campfire",
+                    5 : "Debris",
+                    6 : "Railroad",
+                    7 : "Arson",
+                    8 : "Playing with fire",
+                    9 : "Miscellaneous",
+                    10 : "Vehicle",
+                    11 : "Powerline",
+                    12 : "Firefighter Training",
+                    13 : "Non-Firefighter Training",
+                    14 : "Unknown/Unidentified",
+                    15 : "Structure",
+                    16 : "Aircraft",
+                    17 : "NA",
+                    18 : "Escaped Prescribed Burn",
+                    19 : "Campfire",
+                };
+
+                popup
+                    .setLngLat(arr)
+                    .setHTML(`<strong>${event.features[0].properties.FIRE_NAME} FIRE</strong><br /><strong>Year:</strong> ${parseInt(event.features[0].properties.YEAR_)}<br /><strong>Acreage:</strong> ${parseInt(event.features[0].properties.GIS_ACRES)}<br /><strong>Cause: </strong>${causeDict[event.features[0].properties.CAUSE]}` )
+                    .addTo(map);
+            });
+
+
+            // click on tree to view cause of fire in a popup
+            map.on('mousemove', 'fires1990s', (event) => {
+                // console.log(event.features[0].geometry.coordinates[0][0]);
+                let arr = event.features[0].geometry.coordinates;
+                while(arr[0][0]){
+                    arr = arr[0]
+                }
+
+                // object containing a dictionary of causes of forest fires
+                const causeDict = {
+                    1 : "Lightning",
+                    2 : "Equipment Use",
+                    3 : "Smoking",
+                    4 : "Campfire",
+                    5 : "Debris",
+                    6 : "Railroad",
+                    7 : "Arson",
+                    8 : "Playing with fire",
+                    9 : "Miscellaneous",
+                    10 : "Vehicle",
+                    11 : "Powerline",
+                    12 : "Firefighter Training",
+                    13 : "Non-Firefighter Training",
+                    14 : "Unknown/Unidentified",
+                    15 : "Structure",
+                    16 : "Aircraft",
+                    17 : "NA",
+                    18 : "Escaped Prescribed Burn",
+                    19 : "Campfire",
+                };
+
+                popup
+                    .setLngLat(arr)
+                    .setHTML(`<strong>${event.features[0].properties.FIRE_NAME} FIRE</strong><br /><strong>Year:</strong> ${parseInt(event.features[0].properties.YEAR_)}<br /><strong>Acreage:</strong> ${parseInt(event.features[0].properties.GIS_ACRES)}<br /><strong>Cause: </strong>${causeDict[event.features[0].properties.CAUSE]}` )
+                    .addTo(map);
+            });
+
+
+            // click on tree to view cause of fire in a popup
+            map.on('mousemove', 'fires1980s', (event) => {
+                // console.log(event.features[0].geometry.coordinates[0][0]);
+                let arr = event.features[0].geometry.coordinates;
+                while(arr[0][0]){
+                    arr = arr[0]
+                }
+
+                // object containing a dictionary of causes of forest fires
+                const causeDict = {
+                    1 : "Lightning",
+                    2 : "Equipment Use",
+                    3 : "Smoking",
+                    4 : "Campfire",
+                    5 : "Debris",
+                    6 : "Railroad",
+                    7 : "Arson",
+                    8 : "Playing with fire",
+                    9 : "Miscellaneous",
+                    10 : "Vehicle",
+                    11 : "Powerline",
+                    12 : "Firefighter Training",
+                    13 : "Non-Firefighter Training",
+                    14 : "Unknown/Unidentified",
+                    15 : "Structure",
+                    16 : "Aircraft",
+                    17 : "NA",
+                    18 : "Escaped Prescribed Burn",
+                    19 : "Campfire",
+                };
+
+                popup
+                    .setLngLat(arr)
+                    .setHTML(`<strong>${event.features[0].properties.FIRE_NAME} FIRE</strong><br /><strong>Year:</strong> ${parseInt(event.features[0].properties.YEAR_)}<br /><strong>Acreage:</strong> ${parseInt(event.features[0].properties.GIS_ACRES)}<br /><strong>Cause: </strong>${causeDict[event.features[0].properties.CAUSE]}` )
+                    .addTo(map);
+            });
+
+            map.on('mousemove', 'fires1970s', (event) => {
+                // console.log(event.features[0].geometry.coordinates[0][0]);
+                let arr = event.features[0].geometry.coordinates;
+                while(arr[0][0]){
+                    arr = arr[0]
+                }
+
+                // object containing a dictionary of causes of forest fires
+                const causeDict = {
+                    1 : "Lightning",
+                    2 : "Equipment Use",
+                    3 : "Smoking",
+                    4 : "Campfire",
+                    5 : "Debris",
+                    6 : "Railroad",
+                    7 : "Arson",
+                    8 : "Playing with fire",
+                    9 : "Miscellaneous",
+                    10 : "Vehicle",
+                    11 : "Powerline",
+                    12 : "Firefighter Training",
+                    13 : "Non-Firefighter Training",
+                    14 : "Unknown/Unidentified",
+                    15 : "Structure",
+                    16 : "Aircraft",
+                    17 : "NA",
+                    18 : "Escaped Prescribed Burn",
+                    19 : "Campfire",
+                };
+
+                popup
+                    .setLngLat(arr)
+                    .setHTML(`<strong>${event.features[0].properties.FIRE_NAME} FIRE</strong><br /><strong>Year:</strong> ${parseInt(event.features[0].properties.YEAR_)}<br /><strong>Acreage:</strong> ${parseInt(event.features[0].properties.GIS_ACRES)}<br /><strong>Cause: </strong>${causeDict[event.features[0].properties.CAUSE]}` )
+                    .addTo(map);
+            });
+
+
+            map.on('mouseleave', currentLayer, (event) => {
+                map.getCanvas().style.cursor = '';
+                popup.remove();
+            });
+
+
+
+        });
+
+
+
+
+
+        // create legend
+        const legend = document.getElementById('legend');
+
+        //set up legend grades and labels
+        var labels = ['<strong>Fire</strong>'],
+            vbreak;
+        // add the data source
+        const source =
+            '<p style="text-align: right; font-size:10pt">Source: <a href="https://frap.fire.ca.gov/mapping/gis-data/">Source</a></p>';
+        // combine all the html codes.
+        legend.innerHTML = labels.join('') + source;
+    </script>
+
+</body>
+
+</html>
