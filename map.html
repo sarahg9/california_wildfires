@@ -341,12 +341,14 @@
               if (this.checked) {
 
                 console.log("Checkbox is checked..");
+                document.getElementById("slider").disabled = true;
                 for(let i = 0; i < layers.length; i++){
                     map.setLayoutProperty(layers[i], 'visibility', 'visible');
                 }
               } else {
                 console.log("Checkbox is not checked..");
                 for(let i = 0; i < layers.length; i++){
+                    document.getElementById("slider").disabled = false;
                     if(layers[i] != currentLayer){
                         map.setLayoutProperty(layers[i], 'visibility', 'none');
                     }
