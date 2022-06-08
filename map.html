@@ -41,7 +41,7 @@
             line-height: 20px;
             margin-bottom: 10px;
         }
-        
+
 
         .label {
         width: 15%;
@@ -122,7 +122,7 @@
             border-radius: 50%;
             display: inline-block;
         }
-        
+
 
 
     </style>
@@ -133,7 +133,7 @@
     <div id="legend"></div>
     <div class="map-overlay top">
         <div class="map-overlay-inner">
-            <h1 style ="text-align: center;">California Wildfires <br>1980s-2020s</h1>
+            <h1 style ="text-align: center;">California Wildfires <br>1970s-2020s</h1>
             <h2>Hover over a fire to see more information.</h2>
             <span class="dot" style="background-color: rgb(171, 81, 223)"></span>
             <h3 style="display: inline-block" >1970s</h3>
@@ -148,6 +148,8 @@
             <label id="year"></label>
             <h2>Displayed Decade: <label id='active-year'>2000</label>s</h2>
             <input id="slider" type="range" min="1970" max="2010" step="10" value="2000" list="tickmarks">
+            <h2>Display all layers: </h2>
+            <input id="toggle" type="checkbox">
             <datalist id="tickmarks">
                 <option>1970</option>
                 <option>1980</option>
@@ -155,7 +157,7 @@
                 <option>2000</option>
                 <option>2010</option>
             </datalist>
-            
+
             <a href="https://sarahg9.github.io/california_wildfires/index"><i class="material-icons" style="color:black;" >home</i></a>
             <p style="font-size:16px;display:inline-block;"><br><a href="https://sarahg9.github.io/california_wildfires/index">Homepage</a></p>
             <a href="https://sarahg9.github.io/california_wildfires/about"><i class="material-icons" style="color:black;margin-left:20px">insert_chart</i></a>
@@ -186,12 +188,8 @@
 
         //load data to the map as new layers.
         //map.on('load', function loadingData() {
-        map.on('load', () => { 
-            map.addSource('fires2017', {
-                type: 'geojson',
-                data: 'assets/fire_perimeters_2017on.geojson',
+        map.on('load', () => {
 
-            });
 
             map.addSource('fires2000s-source', {
                 type: 'geojson',
@@ -223,20 +221,30 @@
 
             });
 
-            
+
+            const causeDict = {
+                1 : "Lightning",
+                2 : "Equipment Use",
+                3 : "Smoking",
+                4 : "Campfire",
+                5 : "Debris",
+                6 : "Railroad",
+                7 : "Arson",
+                8 : "Playing with fire",
+                9 : "Miscellaneous",
+                10 : "Vehicle",
+                11 : "Powerline",
+                12 : "Firefighter Training",
+                13 : "Non-Firefighter Training",
+                14 : "Unknown/Unidentified",
+                15 : "Structure",
+                16 : "Aircraft",
+                17 : "NA",
+                18 : "Escaped Prescribed Burn",
+                19 : "Campfire",
+            };
 
 
-            //
-            // map.addLayer({
-            //         'id': 'fires2017_layer',
-            //         'type': 'fill',
-            //         'source': 'fires2017',
-            //         'paint': {
-            //             'fill-color': 'rgba(209, 18, 18, 0.4)',
-            //             'fill-outline-color': 'rgba(200, 100, 240, 1)'
-            //         },
-            //         filter: ['==', ['number', ['get', 'Year_num']], 2020]
-            //     });
 
 
             map.addLayer({
@@ -321,8 +329,34 @@
                     map.setLayoutProperty(currentLayer, 'visibility', 'none');
                     currentLayer = selectedLayer;
                 // update text in the UI
-                document.getElementById('active-decade').innerText = selected + "'s";
+                document.getElementById('active-year').innerText = selected;
             });
+
+
+
+            var checkbox = document.getElementById('toggle');
+
+            checkbox.addEventListener('change', function() {
+                const layers = ['fires1980s', 'fires1990s', 'fires2000s', 'fires2010s'];
+              if (this.checked) {
+
+                console.log("Checkbox is checked..");
+                document.getElementById("slider").disabled = true;
+                for(let i = 0; i < layers.length; i++){
+                    map.setLayoutProperty(layers[i], 'visibility', 'visible');
+                }
+              } else {
+                console.log("Checkbox is not checked..");
+                for(let i = 0; i < layers.length; i++){
+                    document.getElementById("slider").disabled = false;
+                    if(layers[i] != currentLayer){
+                        map.setLayoutProperty(layers[i], 'visibility', 'none');
+                    }
+                }
+              }
+            });
+
+
 
             var popup = new mapboxgl.Popup({closeButton:false});
 
@@ -334,27 +368,6 @@
                 }
 
                 // object containing a dictionary of causes of forest fires
-                const causeDict = {
-                    1 : "Lightning",
-                    2 : "Equipment Use",
-                    3 : "Smoking",
-                    4 : "Campfire",
-                    5 : "Debris",
-                    6 : "Railroad",
-                    7 : "Arson",
-                    8 : "Playing with fire",
-                    9 : "Miscellaneous",
-                    10 : "Vehicle",
-                    11 : "Powerline",
-                    12 : "Firefighter Training",
-                    13 : "Non-Firefighter Training",
-                    14 : "Unknown/Unidentified",
-                    15 : "Structure",
-                    16 : "Aircraft",
-                    17 : "NA",
-                    18 : "Escaped Prescribed Burn",
-                    19 : "Campfire",
-                };
 
                 popup
                     .setLngLat(arr)
@@ -371,27 +384,6 @@
                 }
 
                 // object containing a dictionary of causes of forest fires
-                const causeDict = {
-                    1 : "Lightning",
-                    2 : "Equipment Use",
-                    3 : "Smoking",
-                    4 : "Campfire",
-                    5 : "Debris",
-                    6 : "Railroad",
-                    7 : "Arson",
-                    8 : "Playing with fire",
-                    9 : "Miscellaneous",
-                    10 : "Vehicle",
-                    11 : "Powerline",
-                    12 : "Firefighter Training",
-                    13 : "Non-Firefighter Training",
-                    14 : "Unknown/Unidentified",
-                    15 : "Structure",
-                    16 : "Aircraft",
-                    17 : "NA",
-                    18 : "Escaped Prescribed Burn",
-                    19 : "Campfire",
-                };
 
                 popup
                     .setLngLat(arr)
@@ -409,27 +401,6 @@
                 }
 
                 // object containing a dictionary of causes of forest fires
-                const causeDict = {
-                    1 : "Lightning",
-                    2 : "Equipment Use",
-                    3 : "Smoking",
-                    4 : "Campfire",
-                    5 : "Debris",
-                    6 : "Railroad",
-                    7 : "Arson",
-                    8 : "Playing with fire",
-                    9 : "Miscellaneous",
-                    10 : "Vehicle",
-                    11 : "Powerline",
-                    12 : "Firefighter Training",
-                    13 : "Non-Firefighter Training",
-                    14 : "Unknown/Unidentified",
-                    15 : "Structure",
-                    16 : "Aircraft",
-                    17 : "NA",
-                    18 : "Escaped Prescribed Burn",
-                    19 : "Campfire",
-                };
 
                 popup
                     .setLngLat(arr)
@@ -447,27 +418,6 @@
                 }
 
                 // object containing a dictionary of causes of forest fires
-                const causeDict = {
-                    1 : "Lightning",
-                    2 : "Equipment Use",
-                    3 : "Smoking",
-                    4 : "Campfire",
-                    5 : "Debris",
-                    6 : "Railroad",
-                    7 : "Arson",
-                    8 : "Playing with fire",
-                    9 : "Miscellaneous",
-                    10 : "Vehicle",
-                    11 : "Powerline",
-                    12 : "Firefighter Training",
-                    13 : "Non-Firefighter Training",
-                    14 : "Unknown/Unidentified",
-                    15 : "Structure",
-                    16 : "Aircraft",
-                    17 : "NA",
-                    18 : "Escaped Prescribed Burn",
-                    19 : "Campfire",
-                };
 
                 popup
                     .setLngLat(arr)
@@ -483,27 +433,6 @@
                 }
 
                 // object containing a dictionary of causes of forest fires
-                const causeDict = {
-                    1 : "Lightning",
-                    2 : "Equipment Use",
-                    3 : "Smoking",
-                    4 : "Campfire",
-                    5 : "Debris",
-                    6 : "Railroad",
-                    7 : "Arson",
-                    8 : "Playing with fire",
-                    9 : "Miscellaneous",
-                    10 : "Vehicle",
-                    11 : "Powerline",
-                    12 : "Firefighter Training",
-                    13 : "Non-Firefighter Training",
-                    14 : "Unknown/Unidentified",
-                    15 : "Structure",
-                    16 : "Aircraft",
-                    17 : "NA",
-                    18 : "Escaped Prescribed Burn",
-                    19 : "Campfire",
-                };
 
                 popup
                     .setLngLat(arr)
