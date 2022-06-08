@@ -1,7 +1,7 @@
 # California Wildfires
 https://github.com/sarahg9/california_wildfires
 
-One or two screenshots to illustrate the project's functions.
+![](img/Fire2010s.JPG)
 
 # Project Description
 Wildfires remain a major concern in California. Unplanned burns can destroy homes, infrastructure, and natural landscapes as well as negatively impact air and water quality. The risk of fires can be made worse by drought conditions and This project aims to explore the history of wildfires in California while using climate change as important context.
