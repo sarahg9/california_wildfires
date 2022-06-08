@@ -10,12 +10,24 @@
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
+        <style>
+            .maintitle {
+                        padding: 20px;
+                        margin-left: 30%;
+                        margin-right: 30%;
+                        background-color: rgba(15, 7, 7, 0.541);
+                        border: 5px solid orange;
+                        color: white
+                    }
+
+        </style>
+        
     </head>
     <body>
         <!-- Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="#!">California Wildfires</a>
+                <a class="navbar-brand" href="#!">Mapping CA Wildfires</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -29,28 +41,39 @@
         </nav>
          <!-- Header - set the background image for the header in the line below -->
         <header class="py-5 bg-image-full" style="background-image: url('img/main_background.jpg')">
-            <div class="text-center my-5">
-                <h1 class="text-white fs-3 fw-bolder">Wildfires</h1>
+            <div class="text-center my-5 maintitle">
+                <h1>Mapping California Wildfires</h1>
             </div>
             <div style="height: 20rem"></div>
         </header>
-
-
+        
         <!-- Content section-->
         <section class="py-5">
             <div class="container my-5">
                 <div class="row justify-content-center">
                     <div class="col-lg-6">
-                        <h2>Visualizing the Climate Crisis</h2>
-                        <p class="lead">A single, lightweight helper class allows you to add engaging, full width background images to sections of your page.</p>
-                        <p class="mb-0">The universe is almost 14 billion years old, and, wow! Life had no problem starting here on Earth! I think it would be inexcusably egocentric of us to suggest that we're alone in the universe.</p>
+                        <h2>Visualizing the Change</h2>
+                        <p class="lead">Mapping Historical Wildfires in California</p>
+                        <p class="mb-0">Wildfires remain a major concern in California. Unplanned burns can destroy homes, infrastructure, and natural landscapes 
+                            as well as negatively impact air and water quality. The risk of fires can be made worse by drought conditions and  This project aims 
+                            to explore the history of wildfires in California while using climate change as important context.
+                        </p>
+                        <p class="mb-0"><br>While we may hear about the current and long-term impacts of climate change, it can be difficult to visualize the 
+                            consequences. Our map gives a visualization of changes over time and suggests a trend of increasing fires over recent decades. The 
+                            focus on California and functions of the map were made with the hope of providing a more localized perspective of climate change 
+                            impacts while bringing attention to a region heavily impacted by wildfires.  
+                        </p>
+                        <p class="mb-0"><br>It is important to acknowledge that this is primarily not a research project although it does have educational aims. 
+                            Further exploration into wildfires is encouraged and some resources are provided under 
+                            <a href="https://sarahg9.github.io/california_wildfires/learnmore">Learn More</a>. 
+                        </p>
                     </div>
                 </div>
             </div>
         </section>
         <!-- Footer-->
         <footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Mapping California Wildfires - 2022</p></div>
+            <div class="container"><p class="m-0 text-center text-white">Mapping CA Wildfires - 2022</p></div>
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
