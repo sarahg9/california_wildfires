@@ -188,9 +188,10 @@
                 document.getElementById('active-year').innerText = year;
             });
 
+            var popup = new mapboxgl.Popup({closeButton:false});
 
             // click on tree to view cause of fire in a popup
-            map.on('click', 'fires2017_layer', (event) => {
+            map.on('mousemove', 'fires2017_layer', (event) => {
                 // console.log(event.features[0].geometry.coordinates[0][0]);
                 let arr = event.features[0].geometry.coordinates;
                 while(arr[0][0]){
@@ -198,10 +199,15 @@
                 }
 
                 console.log(arr);
-                new mapboxgl.Popup({closeButton:false})
+                popup
                     .setLngLat(arr)
                     .setHTML(`<strong>Name: </strong> ${event.features[0].properties.FIRE_NAME} Fire<br /><strong>Acreage:</strong> ${event.features[0].properties.GIS_ACRES}` )
                     .addTo(map);
+            });
+
+            map.on('mouseleave', 'fires2017_layer', (event) => {
+                map.getCanvas().style.cursor = '';
+                popup.remove();
             });
 
 
