@@ -201,7 +201,7 @@
                 console.log(arr);
                 popup
                     .setLngLat(arr)
-                    .setHTML(`<strong>Name: </strong> ${event.features[0].properties.FIRE_NAME} Fire<br /><strong>Acreage:</strong> ${Math.round(event.features[0].properties.GIS_ACRES)}` )
+                    .setHTML(`<strong>${event.features[0].properties.FIRE_NAME} FIRE</strong><br /><strong>Acreage:</strong> ${parseInt(event.features[0].properties.GIS_ACRES)}` )
                     .addTo(map);
             });
 
