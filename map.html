@@ -244,8 +244,8 @@
                     'type': 'fill',
                     'source': 'fires2000s-source',
                     'paint': {
-                        'fill-color': 'rgba(209, 18, 18, 0.4)',
-                        'fill-outline-color': 'rgba(200, 100, 240, 1)'
+                        'fill-color': 'rgba(180, 119, 62, 0.75)',
+                        'fill-outline-color': 'rgba(180, 119, 62, 1)'
                     }
                 });
 
@@ -254,8 +254,8 @@
                     'type': 'fill',
                     'source': 'fires2010s-source',
                     'paint': {
-                        'fill-color': 'rgba(209, 18, 18, 0.4)',
-                        'fill-outline-color': 'rgba(200, 100, 240, 1)'
+                        'fill-color': 'rgba(202, 179, 48, 0.75)',
+                        'fill-outline-color': 'rgba(202, 179, 48, 1)'
                     }
                 });
             map.setLayoutProperty('fires2010s', 'visibility', 'none');
@@ -265,8 +265,8 @@
                     'type': 'fill',
                     'source': 'fires1990s-source',
                     'paint': {
-                        'fill-color': 'rgba(209, 18, 18, 0.4)',
-                        'fill-outline-color': 'rgba(200, 100, 240, 1)'
+                        'fill-color': 'rgba(214, 24, 24, 0.75)',
+                        'fill-outline-color': 'rgba(214, 24, 24, 1)'
                     }
                 });
             map.setLayoutProperty('fires1990s', 'visibility', 'none');
@@ -276,8 +276,8 @@
                     'type': 'fill',
                     'source': 'fires1980s-source',
                     'paint': {
-                        'fill-color': 'rgba(209, 18, 18, 0.4)',
-                        'fill-outline-color': 'rgba(200, 100, 240, 1)'
+                        'fill-color': 'rgba(197, 39, 150, 0.75)',
+                        'fill-outline-color': 'rgba(197, 39, 150, 1)'
                     }
                 });
             map.setLayoutProperty('fires1980s', 'visibility', 'none');
@@ -287,8 +287,8 @@
                     'type': 'fill',
                     'source': 'fires1970s-source',
                     'paint': {
-                        'fill-color': 'rgba(209, 18, 18, 0.4)',
-                        'fill-outline-color': 'rgba(200, 100, 240, 1)'
+                        'fill-color': 'rgba(171, 81, 223, 0.75)',
+                        'fill-outline-color': 'rgba(171, 81, 223, 1)'
                     }
                 });
             map.setLayoutProperty('fires1970s', 'visibility', 'none');
@@ -400,7 +400,7 @@
             });
 
 
-            // click on tree to view cause of fire in a popup
+            // click to view cause of fire in a popup
             map.on('mousemove', 'fires1990s', (event) => {
                 // console.log(event.features[0].geometry.coordinates[0][0]);
                 let arr = event.features[0].geometry.coordinates;
@@ -438,7 +438,7 @@
             });
 
 
-            // click on tree to view cause of fire in a popup
+            // click to view cause of fire in a popup
             map.on('mousemove', 'fires1980s', (event) => {
                 // console.log(event.features[0].geometry.coordinates[0][0]);
                 let arr = event.features[0].geometry.coordinates;
@@ -521,19 +521,6 @@
 
         });
 
-
-
-        // create legend
-        const legend = document.getElementById('legend');
-
-        //set up legend grades and labels
-        var labels = ['<strong>Fire</strong>'],
-            vbreak;
-        // add the data source
-        const source =
-            '<p style="text-align: right; font-size:10pt">Source: <a href="https://frap.fire.ca.gov/mapping/gis-data/">Source</a></p>';
-        // combine all the html codes.
-        legend.innerHTML = labels.join('') + source;
     </script>
 
 </body>

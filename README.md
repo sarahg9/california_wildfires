@@ -33,9 +33,9 @@ Geography Data Science Major
 
 # Acknowledgment
 Thank you to our professor and TA for their help with this project.
-## Bo Zhao
+### Bo Zhao
 Professor<br/>
 zhaobo@uw.edu
-## Jiaxin Feng
+### Jiaxin Feng
 TA<br/> 
 jxfang@uw.edu
