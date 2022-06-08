@@ -11296,12 +11296,12 @@ textarea.form-control-lg {
 .about-section {
   padding: 50px;
   text-align: center;
-  background-color: #fd7e14;
+  background-color: #ffa500;
   color: white;
 }
 
 .about-page-section {
-  background-color: #ffc107;
+  background-color: #ffa500;
 }
 
 .column {
@@ -11341,6 +11341,6 @@ textarea.form-control-lg {
 .acknowledgements-section {
   padding: 50px;
   text-align: left;
-  background-color: #fd7e14;
+  background-color: #ffa500;
   color: black;
 }
