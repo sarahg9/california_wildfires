@@ -1,5 +1,6 @@
 # California Wildfires
-https://github.com/sarahg9/california_wildfires
+Respository: https://github.com/sarahg9/california_wildfires
+Page: https://sarahg9.github.io/california_wildfires/
 
 ![screenshot1](/img/screenshot_1.JPG "2010 Fires Full State View")
 ![screenshot2](/img/screenshot_2.JPG "1980s Fires Close-Up")
