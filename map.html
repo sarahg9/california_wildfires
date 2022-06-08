@@ -142,8 +142,8 @@
         <div class="map-overlay-inner">
             <h1>California Wildfires 2017-2020</h1>
             <label id="year"></label>
-            <h2>Year: <label id='active-year'>2017</label></h2>
-            <input id="slider" type="range" min="2017" max="2020" step="1" value="2017">
+            <h2>Year: <label id='active-year'>2000</label></h2>
+            <input id="slider" type="range" min="2000" max="2010" step="10" value="2000">
         </div>
     </div>
     <script>
@@ -172,35 +172,92 @@
 
             });
 
+            map.addSource('fires2000s-source', {
+                type: 'geojson',
+                data: 'assets/fireperimeters_2000s.geojson',
+
+            });
+
+            map.addSource('fires2010s-source', {
+                type: 'geojson',
+                data: 'assets/fireperimeters_2010s.geojson',
+
+            });
+
+
+            //
+            // map.addLayer({
+            //         'id': 'fires2017_layer',
+            //         'type': 'fill',
+            //         'source': 'fires2017',
+            //         'paint': {
+            //             'fill-color': 'rgba(209, 18, 18, 0.4)',
+            //             'fill-outline-color': 'rgba(200, 100, 240, 1)'
+            //         },
+            //         filter: ['==', ['number', ['get', 'Year_num']], 2020]
+            //     });
+
+
             map.addLayer({
-                    'id': 'fires2017_layer',
+                    'id': 'fires2000s',
                     'type': 'fill',
-                    'source': 'fires2017',
+                    'source': 'fires2000s-source',
+                    'paint': {
+                        'fill-color': '#000000',
+                        'fill-outline-color': 'rgba(200, 100, 240, 1)'
+                    }
+                });
+
+            map.addLayer({
+                    'id': 'fires2010s',
+                    'type': 'fill',
+                    'source': 'fires2010s-source',
                     'paint': {
                         'fill-color': 'rgba(209, 18, 18, 0.4)',
                         'fill-outline-color': 'rgba(200, 100, 240, 1)'
-                    },
-                    filter: ['==', ['number', ['get', 'Year_num']], 2020]
+                    }
                 });
+            map.setLayoutProperty('fires2010s', 'visibility', 'none');
 
+
+            let currentLayer = 'fires2000s';
             // update year filter when the slider is dragged
             document.getElementById('slider').addEventListener('input', (event) => {
-                const year = parseInt(event.target.value);
-                // update the map
-                map.setFilter('fires2017_layer', ['==', ['number', ['get', 'Year_num']], year]);
+                console.log('Current Layer: ' + currentLayer);
+                const selected = parseInt(event.target.value);
+                const layerDict = {
+                    2000 : "fires2000s",
+                    2010 : "fires2010s"
+                };
+                const selectedLayer = layerDict[selected];
+                const visibility = map.getLayoutProperty(
+                        selectedLayer,
+                        'visibility'
+                    );
+
+                    // Toggle layer visibility by changing the layout object's visibility property.
+                    console.log('making ' + selectedLayer + ' visible');
+                    map.setLayoutProperty(selectedLayer, 'visibility', 'visible');
+                    this.className = '';
+                    this.className = 'active';
+                    console.log('making ' + currentLayer + ' invisible');
+                    map.setLayoutProperty(currentLayer, 'visibility', 'none');
+                    currentLayer = selectedLayer;
                 // update text in the UI
-                document.getElementById('active-year').innerText = year;
+                document.getElementById('active-year').innerText = selectedLayer;
             });
 
             var popup = new mapboxgl.Popup({closeButton:false});
 
             // click on tree to view cause of fire in a popup
-            map.on('mousemove', 'fires2017_layer', (event) => {
+            map.on('mousemove', currentLayer, (event) => {
                 // console.log(event.features[0].geometry.coordinates[0][0]);
                 let arr = event.features[0].geometry.coordinates;
                 while(arr[0][0]){
                     arr = arr[0]
                 }
+
+                // object containing a dictionary of causes of forest fires
                 const causeDict = {
                     1 : "Lightning",
                     2 : "Equipment Use",
@@ -229,7 +286,44 @@
                     .addTo(map);
             });
 
-            map.on('mouseleave', 'fires2017_layer', (event) => {
+            // click on tree to view cause of fire in a popup
+            map.on('mousemove', 'fires2010s', (event) => {
+                // console.log(event.features[0].geometry.coordinates[0][0]);
+                let arr = event.features[0].geometry.coordinates;
+                while(arr[0][0]){
+                    arr = arr[0]
+                }
+
+                // object containing a dictionary of causes of forest fires
+                const causeDict = {
+                    1 : "Lightning",
+                    2 : "Equipment Use",
+                    3 : "Smoking",
+                    4 : "Campfire",
+                    5 : "Debris",
+                    6 : "Railroad",
+                    7 : "Arson",
+                    8 : "Playing with fire",
+                    9 : "Miscellaneous",
+                    10 : "Vehicle",
+                    11 : "Powerline",
+                    12 : "Firefighter Training",
+                    13 : "Non-Firefighter Training",
+                    14 : "Unknown/Unidentified",
+                    15 : "Structure",
+                    16 : "Aircraft",
+                    17 : "NA",
+                    18 : "Escaped Prescribed Burn",
+                    19 : "Campfire",
+                };
+
+                popup
+                    .setLngLat(arr)
+                    .setHTML(`<strong>${event.features[0].properties.FIRE_NAME} FIRE</strong><br /><strong>Acreage:</strong> ${parseInt(event.features[0].properties.GIS_ACRES)}<br /><strong>Cause: </strong>${causeDict[event.features[0].properties.CAUSE]}` )
+                    .addTo(map);
+            });
+
+            map.on('mouseleave', currentLayer, (event) => {
                 map.getCanvas().style.cursor = '';
                 popup.remove();
             });
